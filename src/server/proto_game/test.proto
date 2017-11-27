@@ -1,0 +1,5 @@
+package proto_game;
+
+message Hello {
+	required string name = 1;
+}
