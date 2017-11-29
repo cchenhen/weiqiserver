@@ -1,0 +1,72 @@
+围棋接口
+
+// in   按POST数据方式发过来
+// out  按JSON格式进行返回
+
+/Weiqi01
+// 登陆接口 每次登陆调用一遍
+in:
+{
+    Uid: string // 唯一的用户名
+}
+out:
+{
+    status: 0 // 成功登陆
+    onlinePlayer: number // 所有在线好友
+}
+
+/Weiqi02
+// 心跳接口 每1秒调用一次，保持在线状态
+
+in:
+{
+    Uid: string
+}
+out:
+{
+    status:0 // 保活成功
+    liveGame: number array //每两个是一组 活跃的棋局Id (0/1)你的回合/对方回合
+}
+
+/Weiqi03
+// 选中好友 新建对局
+in:
+{
+    Uid: string
+    InviteId: string
+}
+out:
+{
+    status:0 // 开启棋局成功
+    gameId: number // 开启的游戏Id 
+}
+
+/Weiqi04
+// 落子
+in:
+{
+    Uid: string
+    GameId: number   //棋局Id
+    NextStep: number //落子信息为X轴*19+y
+}
+out:
+{
+    status:0 //落子成功
+    gameStatus: number array 
+    // 棋局信息
+    // index number = y 轴 将数字进行二进制转码 从第0位开始 每两个是一组  
+    // example: 000000000000...11 末尾11代表  末位x轴0位置 有落子 并且(0黑 1白)落子为白色
+}
+
+/Weiqi05
+// 结束棋局
+in:
+{
+    Uid: string 
+    GameId: number //棋局Id
+    Type: number // 0 系统结束 1 投子认负
+}
+out:
+{
+    status: 0 //结束
+}
