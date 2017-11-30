@@ -6,3 +6,6 @@ Licensing
 ---------
 U can see file:LICENSE
 
+Tips
+---------
+Please check out to branch:develop
