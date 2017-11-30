@@ -38,3 +38,20 @@ func (w *WeiqiInfo) GetWeiqiPlayerColor(playerId string) (uint32, bool) {
 	}
 	return 0, false
 }
+
+func (p *PlayerInfo) GetDbKey() string {
+	return fmt.Sprintf("Weiqi:Player:%v", p.PlayerId)
+}
+
+func (p *PlayerInfo) GetOnGame() []uint32 {
+	if p.AllWQ == nil {
+		return nil
+	}
+	allGame := make([]uint32, 0, len(p.AllWQ))
+	for k, v := range p.AllWQ {
+		if v[1] == conf.UN_FINISHED {
+			allGame = append(allGame, k)
+		}
+	}
+	return allGame
+}

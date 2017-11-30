@@ -28,14 +28,27 @@ func main() {
 	r.POST("/Weiqi01", func(c *gin.Context) {
 		// encode data
 		playerId := c.PostForm("Uid")
-		// TODO game logic
-		statusCode, onlinelist := sbin.Weiqi01(playerId)
-		statusCodeStr := fmt.Sprintln(statusCode)
-		onlinelistStr := fmt.Sprintln(onlinelist)
+		respInfo := sbin.Weiqi01(playerId)
+		statusCodeStr := fmt.Sprintln(respInfo.Status)
+		onlinelistStr := fmt.Sprintln(respInfo.OnlinePlayer)
 		// return data
 		c.JSON(200, gin.H{
 			"status":       statusCodeStr,
 			"onlinePlayer": onlinelistStr,
+		})
+	})
+	r.POST("/Weiqi02", func(c *gin.Context) {
+		// encode data
+		playerId := c.PostForm("Uid")
+		respInfo := sbin.Weiqi02(playerId)
+		statusCodeStr := fmt.Sprintln(respInfo.Status)
+		LiveGame := fmt.Sprintln(respInfo.LiveGame)
+		onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
+		// return data
+		c.JSON(200, gin.H{
+			"status":       statusCodeStr,
+			"liveGame":     LiveGame,
+			"onlinePlayer": onlinePlayer,
 		})
 	})
 	r.Run(":10087")

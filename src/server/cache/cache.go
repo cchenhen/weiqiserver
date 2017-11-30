@@ -13,6 +13,10 @@ type OnlineList struct {
 	lock sync.RWMutex
 }
 
+func InitDflOnlineList() {
+	dflOnlineList.List = make(map[string]int64)
+}
+
 func GetPlayerList() *OnlineList {
 	return &dflOnlineList
 }
@@ -32,6 +36,7 @@ func OutAddOnlinePlayer(playerId string) {
 // 删除离线玩家 需要定时器每一秒钟执行一次
 func (ol *OnlineList) RMOfflinePlayer() {
 	defer ol.lock.Unlock()
+	ol.lock.Lock()
 	timeNow := time.Now().Unix()
 	for k, v := range dflOnlineList.List {
 		if timeNow > v {

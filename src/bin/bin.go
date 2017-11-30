@@ -7,7 +7,8 @@ import (
 )
 
 func LoadServerConf() {
-
+	//init dfl
+	cache.InitDflOnlineList()
 }
 
 func ClearOfflinePlayer() {
