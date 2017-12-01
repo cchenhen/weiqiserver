@@ -20,7 +20,8 @@ func SetRedisC(key string, userinfo *game.WeiqiInfo) error {
 	defer c.Close()
 
 	// 写入
-	_, err = c.Do("SET", key, userinfo)
+	jsonByte, err := json.Marshal(userinfo)
+	_, err = c.Do("SET", key, jsonByte)
 	if err != nil {
 		fmt.Println("redis set failed:", err)
 		return err
