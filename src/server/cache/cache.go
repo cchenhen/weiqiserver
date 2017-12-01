@@ -17,7 +17,12 @@ func InitDflOnlineList() {
 	dflOnlineList.List = make(map[string]int64)
 }
 
-func GetPlayerList() *OnlineList {
+func RMOfflinePlayerForTick() {
+	onlineList := getPlayerList()
+	onlineList.RMOfflinePlayer()
+}
+
+func getPlayerList() *OnlineList {
 	return &dflOnlineList
 }
 

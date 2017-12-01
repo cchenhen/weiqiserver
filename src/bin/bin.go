@@ -19,11 +19,10 @@ func ClearOfflinePlayer() {
 	}()
 	//定时器 每10秒删除一遍在线玩家
 	ticker := time.NewTicker(time.Second * 10)
-	onlineList := cache.GetPlayerList()
 	for {
 		select {
 		case <-ticker.C:
-			go onlineList.RMOfflinePlayer()
+			go cache.RMOfflinePlayerForTick()
 		}
 	}
 }
