@@ -17,7 +17,8 @@ func ClearOfflinePlayer() {
 			fmt.Println("panic: %v", r)
 		}
 	}()
-	ticker := time.NewTicker(time.Second * 1)
+	//定时器 每10秒删除一遍在线玩家
+	ticker := time.NewTicker(time.Second * 10)
 	onlineList := cache.GetPlayerList()
 	for {
 		select {

@@ -54,5 +54,20 @@ func main() {
 			"onlinePlayer": onlinePlayer,
 		})
 	})
+	r.POST("/Weiqi03", func(c *gin.Context) {
+		// encode data
+		playerId := c.PostForm("Uid")
+		inviteId := c.PostForm("InviteId")
+		respInfo := sbin.Weiqi03(playerId, inviteId)
+		statusCodeStr := fmt.Sprintln(respInfo.Status)
+		gameId := fmt.Sprintln(respInfo.GameId)
+		// LiveGame := fmt.Sprintln(respInfo.LiveGame)
+		// onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
+		// return data
+		c.JSON(200, gin.H{
+			"status": statusCodeStr,
+			"gameid": gameId,
+		})
+	})
 	r.Run(":10087")
 }

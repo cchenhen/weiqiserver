@@ -45,6 +45,12 @@ func (ol *OnlineList) RMOfflinePlayer() {
 	}
 }
 
+// 检查玩家是否在线
+func (ol *OnlineList) CheckPlayerIsOnline(playerId string) bool {
+	_, ok := ol.List[playerId]
+	return ok
+}
+
 // 获取所有在线好友 除开自己
 func GetAllOnlinePlayer(playerId string) []string {
 	dflOnlineList.RMOfflinePlayer()
@@ -55,4 +61,8 @@ func GetAllOnlinePlayer(playerId string) []string {
 		}
 	}
 	return onlineList
+}
+
+func IsPlayerOnline(playerId string) bool {
+	return dflOnlineList.CheckPlayerIsOnline(playerId)
 }
