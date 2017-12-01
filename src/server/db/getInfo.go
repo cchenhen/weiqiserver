@@ -19,17 +19,25 @@ func GetPlayerInfo(key string) (*game.PlayerInfo, error) {
 
 	defer c.Close()
 	// 获取
-	key = fmt.Sprintf("weiqi:player:%v", key)
+	key = fmt.Sprintf("Weiqi:Player:%v", key)
 	piInfo, err := c.Do("GET", key)
 	if err != nil {
 		log.Println("redis get failed:", err)
 		return nil, err
 	}
 	var pi game.PlayerInfo
-	piStr := fmt.Sprintf("%v", piInfo)
-	err = json.Unmarshal([]byte(piStr), &pi)
+	b, err := redis.Bytes(piInfo, nil)
 	if err != nil {
-		log.Println("redis set failed:", err)
+		log.Println("redis format failed:", err)
+		return nil, err
+	}
+	if len(b) == 0 {
+		log.Println("redis db miss")
+		return nil, err
+	}
+	err = json.Unmarshal(b, &pi)
+	if err != nil {
+		log.Println("redis get failed:", err)
 		return nil, err
 	}
 	return &pi, err

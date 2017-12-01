@@ -9,3 +9,7 @@ game:
 	@export GOPATH=$(CURDIR)
 	@go build src/main.go
 	@mv main server
+
+make_run:
+	@make game
+	@./server

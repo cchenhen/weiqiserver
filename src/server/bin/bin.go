@@ -42,11 +42,12 @@ func Weiqi01(playerId string) *game.RESP_Weiqi_01 {
 func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 	player, err := db.GetPlayerInfo(playerId)
 	if err != nil {
-		log.Println("Never login：%v", playerId)
+		log.Println("Never login", playerId)
 		return &game.RESP_Weiqi_02{
 			Status: conf.ERR_SERVER_ERR,
 		}
 	}
+	log.Println("PlayerInfo:", player)
 	// keep alive
 	err = db.SetAllPlayerIdList(playerId)
 	if err != nil {
