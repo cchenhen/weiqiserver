@@ -18,3 +18,17 @@ const (
 	ERR_SERVER_ERR     = 113 //服务器错误
 	ERR_INVITE_OFFLINE = 101 //邀请好友不在线
 )
+
+// 棋盘型号
+const (
+	WEIQI_SIZE_SMALL    = 9
+	WEIQI_SIZE_MID      = 13
+	WEIQI_SIZE_STANDARD = 19
+)
+
+//棋盘信息
+const (
+	SPACE_G = 0 //二进制为00
+	BLACK_G = 2 //二进制为10
+	WHITE_G = 3 //二进制为11
+)

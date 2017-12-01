@@ -61,9 +61,6 @@ func main() {
 		respInfo := sbin.Weiqi03(playerId, inviteId)
 		statusCodeStr := fmt.Sprintln(respInfo.Status)
 		gameId := fmt.Sprintln(respInfo.GameId)
-		// LiveGame := fmt.Sprintln(respInfo.LiveGame)
-		// onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
-		// return data
 		c.JSON(200, gin.H{
 			"status": statusCodeStr,
 			"gameid": gameId,
