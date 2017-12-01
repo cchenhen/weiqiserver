@@ -12,4 +12,4 @@ game:
 	@rm -rf server
 make_run:
 	@make game
-	@./server
+	@./bin/server
