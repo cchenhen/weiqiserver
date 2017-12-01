@@ -3,6 +3,7 @@ package main
 import (
 	"bin"
 	"fmt"
+	"log"
 	sbin "server/bin"
 	_ "server/cache"
 
@@ -12,6 +13,8 @@ import (
 func main() {
 	// connect to redis test
 	// load server conf
+	// add log conf to show filename and fileline
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	bin.LoadServerConf()
 	//
 	go bin.ClearOfflinePlayer()

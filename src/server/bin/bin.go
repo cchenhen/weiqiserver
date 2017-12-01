@@ -2,7 +2,7 @@ package bin
 
 import (
 	"conf"
-	"fmt"
+	"log"
 	"server/cache"
 	"server/db"
 	"server/game"
@@ -11,14 +11,14 @@ import (
 func Weiqi01(playerId string) *game.RESP_Weiqi_01 {
 	player, err := db.GetPlayerInfo(playerId)
 	if err != nil {
-		fmt.Println("The first time to login in:%v", playerId)
+		log.Println("The first time to login in:%v", playerId)
 		player = &game.PlayerInfo{}
 		player.Default(playerId)
 	}
 	// add into PlayerList
 	err = db.SetAllPlayerIdList(playerId)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return &game.RESP_Weiqi_01{
 			Status: conf.ERR_SERVER_ERR,
 		}
@@ -26,7 +26,7 @@ func Weiqi01(playerId string) *game.RESP_Weiqi_01 {
 	// save playerinfo
 	err = db.SetPlayerInfo(player.GetDbKey(), player)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return &game.RESP_Weiqi_01{
 			Status: conf.ERR_SERVER_ERR,
 		}
@@ -42,7 +42,7 @@ func Weiqi01(playerId string) *game.RESP_Weiqi_01 {
 func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 	player, err := db.GetPlayerInfo(playerId)
 	if err != nil {
-		fmt.Println("Never login：%v", playerId)
+		log.Println("Never login：%v", playerId)
 		return &game.RESP_Weiqi_02{
 			Status: conf.ERR_SERVER_ERR,
 		}
@@ -50,7 +50,7 @@ func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 	// keep alive
 	err = db.SetAllPlayerIdList(playerId)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return &game.RESP_Weiqi_02{
 			Status: conf.ERR_SERVER_ERR,
 		}
