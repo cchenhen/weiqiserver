@@ -164,7 +164,7 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 	// JoinLog change to [size][size]uint32
 	gameLogStep := StepToGameInfo(gameInfo.JoinLog)
 	if nextStep != conf.GIVE_UP {
-		gameLogStep[x][y] = nextStepColor + 1
+		gameLogStep[x][y] = nextStepColor + 2
 	}
 	// 进行提子
 	newGameLogStep := center.GameCenterLogic(gameLogStep, nextStepColor, gameInfo.Size)
