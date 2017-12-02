@@ -57,6 +57,7 @@ func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 		}
 	}
 	// get all onlineplayer
+	cache.OutAddOnlinePlayer(player.PlayerId)
 	onlineList := cache.GetAllOnlinePlayer(playerId)
 	liveGame := player.GetOnGame()
 	return &game.RESP_Weiqi_02{

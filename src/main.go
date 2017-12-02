@@ -11,13 +11,16 @@ import (
 )
 
 func main() {
-	// connect to redis test
-	// load server conf
-	// add log conf to show filename and fileline
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	bin.LoadServerConf()
-	//
-	go bin.ClearOfflinePlayer()
+	//go bin.ClearOfflinePlayer()
+	go runGameServer()
+	for {
+
+	}
+}
+
+func runGameServer() {
 	r := gin.Default()
 	//test
 	r.POST("/Weiqi", func(c *gin.Context) {
@@ -32,6 +35,7 @@ func main() {
 		// encode data
 		playerId := c.PostForm("Uid")
 		respInfo := sbin.Weiqi01(playerId)
+		log.Println("/Weiqi01_RESP_INFO:", respInfo)
 		statusCodeStr := fmt.Sprintln(respInfo.Status)
 		onlinelistStr := fmt.Sprintln(respInfo.OnlinePlayer)
 		// return data
@@ -44,6 +48,7 @@ func main() {
 		// encode data
 		playerId := c.PostForm("Uid")
 		respInfo := sbin.Weiqi02(playerId)
+		log.Println("/Weiqi02_RESP_INFO:", respInfo)
 		statusCodeStr := fmt.Sprintln(respInfo.Status)
 		LiveGame := fmt.Sprintln(respInfo.LiveGame)
 		onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
@@ -59,6 +64,7 @@ func main() {
 		playerId := c.PostForm("Uid")
 		inviteId := c.PostForm("InviteId")
 		respInfo := sbin.Weiqi03(playerId, inviteId)
+		log.Println("/Weiqi03_RESP_INFO:", respInfo)
 		statusCodeStr := fmt.Sprintln(respInfo.Status)
 		gameId := fmt.Sprintln(respInfo.GameId)
 		c.JSON(200, gin.H{

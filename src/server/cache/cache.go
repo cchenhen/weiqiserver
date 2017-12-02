@@ -14,7 +14,9 @@ type OnlineList struct {
 }
 
 func InitDflOnlineList() {
-	dflOnlineList.List = make(map[string]int64)
+	if dflOnlineList.List == nil {
+		dflOnlineList.List = make(map[string]int64)
+	}
 }
 
 func RMOfflinePlayerForTick() {
@@ -58,11 +60,12 @@ func (ol *OnlineList) CheckPlayerIsOnline(playerId string) bool {
 
 // 获取所有在线好友 除开自己
 func GetAllOnlinePlayer(playerId string) []string {
-	dflOnlineList.RMOfflinePlayer()
+	//dflOnlineList.RMOfflinePlayer()
+	timeNow := time.Now().Unix()
 	onlineList := []string{}
-	for k := range dflOnlineList.List {
-		if playerId != k {
-			onlineList = append(onlineList, playerId)
+	for k, v := range dflOnlineList.List {
+		if playerId != k && timeNow < v {
+			onlineList = append(onlineList, k)
 		}
 	}
 	return onlineList
