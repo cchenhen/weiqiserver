@@ -6,6 +6,7 @@ import (
 	"log"
 	sbin "server/bin"
 	_ "server/cache"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -63,7 +64,13 @@ func runGameServer() {
 		// encode data
 		playerId := c.PostForm("Uid")
 		inviteId := c.PostForm("InviteId")
-		respInfo := sbin.Weiqi03(playerId, inviteId)
+		sizeStr := c.PostForm("Size")
+		size, err := strconv.Atoi(sizeStr)
+		if err != nil {
+			log.Println("BadParam", sizeStr)
+			size = 0
+		}
+		respInfo := sbin.Weiqi03(playerId, inviteId, size)
 		log.Println("/Weiqi03_RESP_INFO:", respInfo)
 		statusCodeStr := fmt.Sprintln(respInfo.Status)
 		gameId := fmt.Sprintln(respInfo.GameId)
@@ -72,5 +79,6 @@ func runGameServer() {
 			"gameid": gameId,
 		})
 	})
+
 	r.Run(":10087")
 }

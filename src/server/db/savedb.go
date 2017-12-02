@@ -47,9 +47,17 @@ func GetRedisC(key string) (*game.WeiqiInfo, error) {
 		log.Println("redis get failed:", err)
 		return nil, err
 	}
+	b, err := redis.Bytes(weiqiInfo, nil)
+	if err != nil {
+		log.Println("redis format failed:", err)
+		return nil, err
+	}
+	if len(b) == 0 {
+		log.Println("redis db miss")
+		return nil, err
+	}
 	var wi game.WeiqiInfo
-	weiqiStr := fmt.Sprintf("%v", weiqiInfo)
-	err = json.Unmarshal([]byte(weiqiStr), &wi)
+	err = json.Unmarshal(b, &wi)
 	if err != nil {
 		log.Println("redis set failed:", err)
 		return nil, err

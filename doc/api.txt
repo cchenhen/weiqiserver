@@ -35,6 +35,7 @@ in:
 {
     Uid: string
     InviteId: string
+    Size: number //棋盘大小，分别为9，13，19
 }
 out:
 {
@@ -48,7 +49,7 @@ in:
 {
     Uid: string
     GameId: number   //棋局Id
-    NextStep: number //落子信息为X轴*19+y
+    NextStep: number //落子信息为X轴*19+y,当选择跳过时，NextStep为400
 }
 out:
 {

@@ -9,6 +9,8 @@ const (
 	UN_FINISHED     = 0 // 未完成对局
 	FINISHED_WIN    = 1 // 完成并且胜利
 	FINISHED_FAILED = 2 // 完成并且失败
+
+	GIVE_UP = 400 // 放弃该手
 )
 
 //错误码

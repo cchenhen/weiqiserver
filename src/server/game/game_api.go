@@ -66,3 +66,17 @@ func (p *PlayerInfo) GetOnGame() []int64 {
 	}
 	return allGame
 }
+
+// GetNextStepColor 获取下一步行动的方向
+func (w *WeiqiInfo) GetNextStepColor() uint32 {
+	if len(w.StepLog[0]) > len(w.StepLog[1]) {
+		return conf.BLACK_PLAYER
+	}
+	return conf.WHITE_PLAYER
+}
+
+//  AddOneStep 添加行动步骤
+func (w *WeiqiInfo) AddOneLogStep(color uint32, nextStep int) {
+	newNextStep := uint32(nextStep)
+	w.StepLog[color] = append(w.StepLog[color], newNextStep)
+}

@@ -15,3 +15,8 @@ type RESP_Weiqi_03 struct {
 	Status uint32
 	GameId int64
 }
+
+type RESP_Weiqi_04 struct {
+	Status     uint32
+	GameStatus []int64
+}

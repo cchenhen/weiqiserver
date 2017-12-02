@@ -6,6 +6,7 @@ import (
 
 type WeiqiInfo struct {
 	WeiqiId int64       //每场棋局独立Id
+	Size    uint32      //分别为9*9 13*13 19*19
 	StepLog [2][]uint32 //步数信息 0黑 1白//之后落子信息为X轴*19+y,以棋局左下角建立直角坐标系
 	JoinLog []int64     //棋盘信息
 	Player  [2]string   //玩家编号 index0 执白 index1 执黑
@@ -25,9 +26,13 @@ type PlayerInfo struct {
 	//成就编号 成就获取时间
 }
 
-func NewOneGame(player []string) *WeiqiInfo {
+func NewOneGame(player []string, size int) *WeiqiInfo {
 	var cc WeiqiInfo
 	cc.Default()
+	cc.Size = uint32(size)
+	cc.JoinLog = make([]int64, size)
+	cc.StepLog[0] = []uint32{}
+	cc.StepLog[1] = []uint32{}
 	newPlayer := [2]string{}
 	for index := 0; index < 2; index++ {
 		newPlayer[index] = player[index]
