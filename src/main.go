@@ -80,5 +80,20 @@ func runGameServer() {
 		})
 	})
 
+	r.POST("/Weiqi04", func(c *gin.Context) {
+		playerId := c.PostForm("Uid")
+		gameId := c.PostForm("GameId")
+		nextStepStr := c.PostForm("NextStep")
+		nextStep, _ := strconv.Atoi(nextStepStr)
+		respInfo := sbin.Weiqi04(playerId, gameId, nextStep)
+		log.Println("/Weiqi04_RESP_INFO:", respInfo)
+		statusCodeStr := fmt.Sprintln(respInfo.Status)
+		gameInfo := fmt.Sprintln(respInfo.GameStatus)
+		c.JSON(200, gin.H{
+			"status":     statusCodeStr,
+			"gamestatis": gameInfo,
+		})
+	})
+
 	r.Run(":10087")
 }
