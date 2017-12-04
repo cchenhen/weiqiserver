@@ -185,3 +185,32 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 		GameStatus: newJoinStep,
 	}
 }
+
+func Weiqi06(playId string, gameId string) *game.RESP_Weiqi_06 {
+	_, err := db.GetPlayerInfo(playId)
+	if err != nil {
+		log.Println("Bad PlayerId", playId)
+		return &game.RESP_Weiqi_06{
+			Status: conf.ERR_SERVER_ERR,
+		}
+	}
+	key := fmt.Sprintf("Weiqi:Game:%v", gameId)
+	gameInfo, err := db.GetRedisC(key)
+	if err != nil {
+		log.Println("Bad GameId", gameId)
+		return &game.RESP_Weiqi_06{
+			Status: conf.ERR_SERVER_ERR,
+		}
+	}
+	roundColor := gameInfo.GetNextStepColor()
+	playInfo := gameInfo.Player
+	size := gameInfo.Size
+	gameStatus := gameInfo.JoinLog
+	return &game.RESP_Weiqi_06{
+		Status:     conf.SUCCEED,
+		Round:      roundColor,
+		Player:     playInfo,
+		Size:       size,
+		GameStatus: gameStatus,
+	}
+}

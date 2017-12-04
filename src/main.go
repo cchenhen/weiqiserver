@@ -47,12 +47,8 @@ func runGameServer() {
 		playerId := c.PostForm("Uid")
 		respInfo := sbin.Weiqi02(playerId)
 		log.Println("/Weiqi02_RESP_INFO:", respInfo)
-		statusCodeStr := fmt.Sprintln(respInfo.Status)
-		// LiveGame := fmt.Sprintln(respInfo.LiveGame)
-		// onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
-		// return data
 		c.JSON(200, gin.H{
-			"status":       statusCodeStr,
+			"status":       respInfo.Status,
 			"liveGame":     respInfo.LiveGame,
 			"onlinePlayer": respInfo.OnlinePlayer,
 		})
@@ -69,11 +65,9 @@ func runGameServer() {
 		}
 		respInfo := sbin.Weiqi03(playerId, inviteId, size)
 		log.Println("/Weiqi03_RESP_INFO:", respInfo)
-		statusCodeStr := fmt.Sprintln(respInfo.Status)
-		gameId := fmt.Sprintln(respInfo.GameId)
 		c.JSON(200, gin.H{
-			"status": statusCodeStr,
-			"gameid": gameId,
+			"status": respInfo.Status,
+			"gameid": respInfo.GameId,
 		})
 	})
 
@@ -84,13 +78,24 @@ func runGameServer() {
 		nextStep, _ := strconv.Atoi(nextStepStr)
 		respInfo := sbin.Weiqi04(playerId, gameId, nextStep)
 		log.Println("/Weiqi04_RESP_INFO:", respInfo)
-		statusCodeStr := fmt.Sprintln(respInfo.Status)
-		gameInfo := fmt.Sprintln(respInfo.GameStatus)
 		c.JSON(200, gin.H{
-			"status":     statusCodeStr,
-			"gamestatis": gameInfo,
+			"status":     respInfo.Status,
+			"gamestatis": respInfo.GameStatus,
 		})
 	})
 
+	r.POST("/Weiqi06", func(c *gin.Context) {
+		playerId := c.PostForm("Uid")
+		gameId := c.PostForm("GameId")
+		respInfo := sbin.Weiqi06(playerId, gameId)
+		log.Println("/Weiqi06_RESP_INFO:", respInfo)
+		c.JSON(200, gin.H{
+			"status":     respInfo.Status,
+			"size":       respInfo.Size,
+			"playInfo":   respInfo.Player,
+			"round":      respInfo.Round,
+			"gameStatus": respInfo.GameStatus,
+		})
+	})
 	r.Run(":10087")
 }
