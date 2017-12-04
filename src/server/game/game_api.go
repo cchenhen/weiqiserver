@@ -69,7 +69,7 @@ func (p *PlayerInfo) GetOnGame() []int64 {
 
 // GetNextStepColor 获取下一步行动的方向
 func (w *WeiqiInfo) GetNextStepColor() uint32 {
-	if len(w.StepLog[0]) > len(w.StepLog[1]) {
+	if len(w.StepLog[0]) >= len(w.StepLog[1]) {
 		return conf.BLACK_PLAYER
 	}
 	return conf.WHITE_PLAYER
