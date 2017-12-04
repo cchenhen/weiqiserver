@@ -48,13 +48,13 @@ func runGameServer() {
 		respInfo := sbin.Weiqi02(playerId)
 		log.Println("/Weiqi02_RESP_INFO:", respInfo)
 		statusCodeStr := fmt.Sprintln(respInfo.Status)
-		LiveGame := fmt.Sprintln(respInfo.LiveGame)
-		onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
+		// LiveGame := fmt.Sprintln(respInfo.LiveGame)
+		// onlinePlayer := fmt.Sprintln(respInfo.OnlinePlayer)
 		// return data
 		c.JSON(200, gin.H{
 			"status":       statusCodeStr,
-			"liveGame":     LiveGame,
-			"onlinePlayer": onlinePlayer,
+			"liveGame":     respInfo.LiveGame,
+			"onlinePlayer": respInfo.OnlinePlayer,
 		})
 	})
 	r.POST("/Weiqi03", func(c *gin.Context) {

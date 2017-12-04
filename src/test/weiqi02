@@ -1,0 +1,8 @@
+#!/bin/bash
+
+while true
+do
+    curl -X POST http://localhost:10087/Weiqi02 -d 'Uid=jkl3'
+    echo '\n'
+    sleep 1s
+done
