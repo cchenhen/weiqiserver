@@ -70,6 +70,7 @@ func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 }
 
 func Weiqi03(playerId string, inviteId string, size int) *game.RESP_Weiqi_03 {
+	log.Println("playerId:", playerId, "iId:", inviteId, "size:", size)
 	player, err := db.GetPlayerInfo(playerId)
 	if err != nil {
 		log.Println("Never login", playerId)
@@ -77,14 +78,14 @@ func Weiqi03(playerId string, inviteId string, size int) *game.RESP_Weiqi_03 {
 			Status: conf.ERR_SERVER_ERR,
 		}
 	}
-	log.Println("PlayerInfo:", player)
+	// TODO check is online
 	// check inviteid is alive
-	if !cache.IsPlayerOnline(inviteId) {
-		log.Println("Invite player is offline:", inviteId)
-		return &game.RESP_Weiqi_03{
-			Status: conf.ERR_INVITE_OFFLINE,
-		}
-	}
+	// if !cache.IsPlayerOnline(inviteId) {
+	// 	log.Println("Invite player is offline:", inviteId)
+	// 	return &game.RESP_Weiqi_03{
+	// 		Status: conf.ERR_INVITE_OFFLINE,
+	// 	}
+	// }
 	invitePlayer, err := db.GetPlayerInfo(inviteId)
 	if err != nil {
 		log.Println("Never login", inviteId)
@@ -93,7 +94,7 @@ func Weiqi03(playerId string, inviteId string, size int) *game.RESP_Weiqi_03 {
 		}
 	}
 	// check size
-	if size == conf.WEIQI_SIZE_SMALL || size == conf.WEIQI_SIZE_MID || size == conf.WEIQI_SIZE_STANDARD {
+	if size != conf.WEIQI_SIZE_SMALL && size != conf.WEIQI_SIZE_MID && size != conf.WEIQI_SIZE_STANDARD) {
 		return &game.RESP_Weiqi_03{
 			Status: conf.ERR_BAD_PARAM,
 		}
