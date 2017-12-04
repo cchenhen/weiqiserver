@@ -2,7 +2,6 @@ package db
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"server/game"
 
@@ -41,7 +40,6 @@ func GetRedisC(key string) (*game.WeiqiInfo, error) {
 
 	defer c.Close()
 	// 获取
-	key = fmt.Sprintf("weiqi:game:%v", key)
 	weiqiInfo, err := c.Do("GET", key)
 	if err != nil {
 		log.Println("redis get failed:", err)

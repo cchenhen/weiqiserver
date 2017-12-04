@@ -51,6 +51,7 @@ func runGameServer() {
 			"status":       respInfo.Status,
 			"liveGame":     respInfo.LiveGame,
 			"onlinePlayer": respInfo.OnlinePlayer,
+			"allGameInfo":  respInfo.AllGameInfo,
 		})
 	})
 	r.POST("/Weiqi03", func(c *gin.Context) {

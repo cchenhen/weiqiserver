@@ -27,6 +27,12 @@ out:
     status:0 // 保活成功
     liveGame: number array //每两个是一组 活跃的棋局Id (0/1)你的回合/对方回合
     onlinePlayer: number // 所有在线好友
+    allGameInfo: json array //所有未结束游戏的状态
+    // json:
+    // size: number // 棋局大小
+    // playerInfo: string array // index0 黑色方 index1白色方
+    // round: number // 0 黑色方行动 1 白色方行动
+    // gameStatus: number array 
 }
 
 /Weiqi03
