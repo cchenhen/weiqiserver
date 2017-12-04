@@ -25,7 +25,6 @@ in:
 out:
 {
     status:0 // 保活成功
-    liveGame: number array //每两个是一组 活跃的棋局Id (0/1)你的回合/对方回合
     onlinePlayer: number // 所有在线好友
     allGameInfo: json array //所有未结束游戏的状态
     // json:

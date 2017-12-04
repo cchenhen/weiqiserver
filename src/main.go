@@ -49,7 +49,6 @@ func runGameServer() {
 		log.Println("/Weiqi02_RESP_INFO:", respInfo)
 		c.JSON(200, gin.H{
 			"status":       respInfo.Status,
-			"liveGame":     respInfo.LiveGame,
 			"onlinePlayer": respInfo.OnlinePlayer,
 			"allGameInfo":  respInfo.AllGameInfo,
 		})

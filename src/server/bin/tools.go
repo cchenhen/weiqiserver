@@ -27,6 +27,7 @@ func GetAllOnlineGameInfo(liveGame []int64) []game.AllGameInfo {
 			return nil
 		}
 		newGameInfo := &game.AllGameInfo{}
+		newGameInfo.GameId = v
 		newGameInfo.Size = gameInfo.Size
 		newGameInfo.Round = gameInfo.GetNextStepColor()
 		newGameInfo.Player = gameInfo.Player

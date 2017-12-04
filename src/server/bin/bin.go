@@ -62,17 +62,11 @@ func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 	cache.OutAddOnlinePlayer(player.PlayerId)
 	onlineList := cache.GetAllOnlinePlayer(playerId)
 	liveGame := player.GetOnGame()
-	liveGameInfo := make([]int64, 0, len(liveGame)*2)
-	for k := range liveGame {
-		nextStepColor := GetColorByPlayId(player, liveGame[k])
-		liveGameInfo = append(liveGameInfo, liveGame[k], int64(nextStepColor))
-	}
 	// add gameInfo
 	allGameInfo := GetAllOnlineGameInfo(liveGame)
 	return &game.RESP_Weiqi_02{
 		Status:       conf.SUCCEED,
 		OnlinePlayer: onlineList,
-		LiveGame:     liveGameInfo,
 		AllGameInfo:  allGameInfo,
 	}
 }

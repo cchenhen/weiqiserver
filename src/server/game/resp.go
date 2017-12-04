@@ -7,7 +7,6 @@ type RESP_Weiqi_01 struct {
 
 type RESP_Weiqi_02 struct {
 	Status       uint32
-	LiveGame     []int64
 	OnlinePlayer []string
 	AllGameInfo  []AllGameInfo
 }
@@ -31,6 +30,7 @@ type RESP_Weiqi_06 struct {
 }
 
 type AllGameInfo struct {
+	GameId     int64
 	Round      uint32
 	Player     [2]string
 	Size       uint32
