@@ -94,7 +94,7 @@ func Weiqi03(playerId string, inviteId string, size int) *game.RESP_Weiqi_03 {
 		}
 	}
 	// check size
-	if size != conf.WEIQI_SIZE_SMALL && size != conf.WEIQI_SIZE_MID && size != conf.WEIQI_SIZE_STANDARD) {
+	if size != conf.WEIQI_SIZE_SMALL && size != conf.WEIQI_SIZE_MID && size != conf.WEIQI_SIZE_STANDARD {
 		return &game.RESP_Weiqi_03{
 			Status: conf.ERR_BAD_PARAM,
 		}

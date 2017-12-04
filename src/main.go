@@ -15,10 +15,7 @@ func main() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	bin.LoadServerConf()
 	//go bin.ClearOfflinePlayer()
-	go runGameServer()
-	for {
-
-	}
+	runGameServer()
 }
 
 func runGameServer() {
