@@ -54,7 +54,11 @@ func (ol *OnlineList) RMOfflinePlayer() {
 
 // 检查玩家是否在线
 func (ol *OnlineList) CheckPlayerIsOnline(playerId string) bool {
-	_, ok := ol.List[playerId]
+	timeNow := time.Now().Unix()
+	val, ok := ol.List[playerId]
+	if ok {
+		return timeNow <= val
+	}
 	return ok
 }
 
