@@ -72,3 +72,23 @@ out:
 {
     status: 0 //结束
 }
+
+/Weiqi06
+// 获取棋盘详细信息
+in:
+{
+    Uid: string
+    GameId: number // 棋局Id
+    Type: number // 0正在进行的棋局 1已经结束的棋局
+}
+out:
+{
+    status: 0 
+    size: number // 棋局大小
+    playerInfo: string array // index0 黑色方 index1白色方
+    round: number // 0 黑色方行动 1 白色方行动
+    gameStatus: number array 
+    // 棋局信息
+    // index number = y 轴 将数字进行二进制转码 从第0位开始 每两个是一组  
+    // example: 000000000000...11 末尾11代表  末位x轴0位置 有落子 并且(0黑 1白)落子为白色
+}
