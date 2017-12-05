@@ -123,7 +123,7 @@ func Weiqi03(playerId string, inviteId string, size int) *game.RESP_Weiqi_03 {
 			Status: conf.ERR_SERVER_ERR,
 		}
 	}
-	err = db.SetPlayerInfo(player.GetDbKey(), invitePlayer)
+	err = db.SetPlayerInfo(invitePlayer.GetDbKey(), invitePlayer)
 	if err != nil {
 		log.Println(err)
 		return &game.RESP_Weiqi_03{
@@ -162,15 +162,18 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 		}
 	}
 	gameInfo.AddOneLogStep(nextStepColor, nextStep)
-	x := nextStep / 19
-	y := nextStep % 19
+	y := nextStep / 19
+	x := nextStep % 19
+	log.Print("nextstep:", nextStep, "xy:", x, y)
 	// JoinLog change to [size][size]uint32
 	gameLogStep := StepToGameInfo(gameInfo.JoinLog)
 	if nextStep != conf.GIVE_UP {
-		gameLogStep[x][y] = nextStepColor + 2
+		gameLogStep[x][y] = nextStepColor + 1
 	}
 	// 进行提子
+	log.Println("oldGame:", gameLogStep)
 	newGameLogStep := center.GameCenterLogic(gameLogStep, nextStepColor, gameInfo.Size)
+	log.Println("newGame:", newGameLogStep)
 	newJoinStep := StepLogToGameShow(newGameLogStep)
 	gameInfo.JoinLog = newJoinStep
 	//save db
@@ -183,7 +186,7 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 		}
 	}
 	return &game.RESP_Weiqi_04{
-		Status:     conf.ERR_SERVER_ERR,
+		Status:     conf.SUCCEED,
 		GameStatus: newJoinStep,
 	}
 }

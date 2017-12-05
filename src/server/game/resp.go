@@ -30,7 +30,7 @@ type RESP_Weiqi_06 struct {
 }
 
 type AllGameInfo struct {
-	GameId     int64
+	GameId     string
 	Round      uint32
 	Player     [2]string
 	Size       uint32
