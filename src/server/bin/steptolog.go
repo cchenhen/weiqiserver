@@ -44,11 +44,11 @@ func StepLogToGameShow(gameStep [][]uint32) []int64 {
 			// 	newLog |= 0 << j * 2
 			// 	newLog |= 0<<j*2 + 1
 			case 1:
-				newLog |= 1 << (j*2 + 1)
-				newLog |= 0 << (j * 2)
+				newLog |= 1 << (j + 1)
+				newLog |= 0 << j
 			case 2:
-				newLog |= 1 << (j * 2)
-				newLog |= 1 << (j*2 + 1)
+				newLog |= 1 << j
+				newLog |= 1 << (j + 1)
 			}
 		}
 		log.Println("exchange data", newLog)
