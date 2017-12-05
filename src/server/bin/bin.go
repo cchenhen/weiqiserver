@@ -1,7 +1,6 @@
 package bin
 
 import (
-	"center"
 	"conf"
 	"fmt"
 	"log"
@@ -152,6 +151,7 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 			Status: conf.ERR_SERVER_ERR,
 		}
 	}
+	log.Println("gameInfo:", gameInfo)
 	//check is the right step
 	nextStepColor := gameInfo.GetNextStepColor()
 	playerColor, _ := gameInfo.GetWeiqiPlayerColor(playerId)
@@ -172,8 +172,9 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 	}
 	// 进行提子
 	log.Println("oldGame:", gameLogStep)
-	newGameLogStep := center.GameCenterLogic(gameLogStep, nextStepColor, gameInfo.Size)
-	log.Println("newGame:", newGameLogStep)
+	//newGameLogStep := center.GameCenterLogic(gameLogStep, nextStepColor, gameInfo.Size)
+	//log.Println("newGame:", newGameLogStep)
+	newGameLogStep := gameLogStep
 	newJoinStep := StepLogToGameShow(newGameLogStep)
 	gameInfo.JoinLog = newJoinStep
 	//save db
