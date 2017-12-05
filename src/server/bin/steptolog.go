@@ -13,31 +13,16 @@ func StepToGameInfo(gameStep []int64) [][]uint32 {
 	for i := 0; i < gameSize; i++ {
 		row := gameStep[i]
 		for j := uint(0); j < uint(gameSize*2); j += 2 {
-			var (
-				b int64
-				c int64
-			)
-			var (
-				e uint64
-				f uint64
-			)
-			if j == 0 {
-				d := uint64(row)
-				e = d << 62
-				f = e >> 62
-				c = int64(f)
-			} else {
-				b = row << (61 - j)
-				c = b >> (61)
-			}
-			switch c {
-			case 0:
+			b := row >> j & 1
+			c := row >> (j + 1) & 1
+			switch {
+			case b == 0 && c == 0:
 				//空白子
 				gameInfo[i][j/2] = 0
-			case 2:
+			case b == 0 && c == 1:
 				//黑子
 				gameInfo[i][j/2] = 1
-			case 3:
+			case b == 1 && c == 1:
 				//白子
 				gameInfo[i][j/2] = 2
 			}
