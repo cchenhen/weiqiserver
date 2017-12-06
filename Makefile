@@ -23,5 +23,7 @@ linux:
 	@cp server ./bin/linux/
 	@rm -rf server
 run_linux:
-	@make linux
 	@./bin/linux/server
+run_linx_server:
+	@rm -rf log/game.log
+	@nohup ./bin/linux/server > log/game.log 2>&1 &
