@@ -1,6 +1,7 @@
 package bin
 
 import (
+	"center"
 	"conf"
 	"fmt"
 	"log"
@@ -172,9 +173,9 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 	}
 	// 进行提子
 	log.Println("oldGame:", gameLogStep)
-	//newGameLogStep := center.GameCenterLogic(gameLogStep, nextStepColor, gameInfo.Size)
+	newGameLogStep := center.GameCenterLogic(gameLogStep, nextStepColor, gameInfo.Size)
 	//log.Println("newGame:", newGameLogStep)
-	newGameLogStep := gameLogStep
+	//newGameLogStep := gameLogStep
 	newJoinStep := StepLogToGameShow(newGameLogStep)
 	gameInfo.JoinLog = newJoinStep
 	//save db
