@@ -26,6 +26,8 @@ out:
 {
     status:0 // 保活成功
     onlinePlayer: number // 所有在线好友
+    inviteInfo: json // 匹配状态
+    // status: 0 结束匹配 1 正在匹配
     allGameInfo: json array //所有未结束游戏的状态
     // json:
     // size: number // 棋局大小
@@ -96,4 +98,17 @@ out:
     // 棋局信息
     // index number = y 轴 将数字进行二进制转码 从第0位开始 每两个是一组  
     // example: 000000000000...11 末尾11代表  末位x轴0位置 有落子 并且(0黑 1白)落子为白色
+}
+
+/Weiqi07
+// 匹配对局
+in:
+{
+    Uid: string
+    Type: number // 0 开始匹配 1 取消匹配 
+    Size: number //棋盘大小，分别为9，13，19
+}
+out:
+{
+    status:0 // 开启棋局成功
 }

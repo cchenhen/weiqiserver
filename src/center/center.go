@@ -57,7 +57,6 @@ func TakeDeadChess(gameInfo [][]uint32, getColor uint32, gameSize uint32) {
 				}
 				pos++ //next step
 			}
-			//TODO is dead chess
 			if top > 0 && IsDeadChess(gameInfo, allInfo, top, gameSize) {
 				ClearDeadChess(gameInfo, allInfo, top)
 			}
