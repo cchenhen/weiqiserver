@@ -9,6 +9,7 @@ type RESP_Weiqi_02 struct {
 	Status       uint32
 	OnlinePlayer []string
 	AllGameInfo  []AllGameInfo
+	InviteInfo   uint32
 }
 
 type RESP_Weiqi_03 struct {

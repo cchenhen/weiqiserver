@@ -15,6 +15,7 @@ func main() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	bin.LoadServerConf()
 	//go bin.ClearOfflinePlayer()
+	go bin.MatchPlayer()
 	runGameServer()
 }
 
@@ -95,6 +96,16 @@ func runGameServer() {
 			"playInfo":   respInfo.Player,
 			"round":      respInfo.Round,
 			"gameStatus": respInfo.GameStatus,
+		})
+	})
+	r.POST("/Weiqi07", func(c *gin.Context) {
+		playerId := c.PostForm("Uid")
+		matchType := c.PostForm("Type")
+		gameSize := c.PostForm("Size")
+		statusCode := sbin.Weiqi07(playerId, matchType, gameSize)
+		log.Println("/Weiqi07_RESP_INFO:", statusCode)
+		c.JSON(200, gin.H{
+			"status": statusCode,
 		})
 	})
 	r.Run(":10087")

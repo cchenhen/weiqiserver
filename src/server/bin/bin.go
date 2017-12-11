@@ -8,6 +8,7 @@ import (
 	"server/cache"
 	"server/db"
 	"server/game"
+	"strconv"
 )
 
 func Weiqi01(playerId string) *game.RESP_Weiqi_01 {
@@ -64,10 +65,12 @@ func Weiqi02(playerId string) *game.RESP_Weiqi_02 {
 	liveGame := player.GetOnGame()
 	// add gameInfo
 	allGameInfo := GetAllOnlineGameInfo(liveGame)
+	isEnd := cache.GetMatchStatusByPlayerId(playerId)
 	return &game.RESP_Weiqi_02{
 		Status:       conf.SUCCEED,
 		OnlinePlayer: onlineList,
 		AllGameInfo:  allGameInfo,
+		InviteInfo:   isEnd,
 	}
 }
 
@@ -220,4 +223,21 @@ func Weiqi06(playId string, gameId string) *game.RESP_Weiqi_06 {
 		Size:       size,
 		GameStatus: gameStatus,
 	}
+}
+
+func Weiqi07(playerId string, matchType string, gameSize string) uint32 {
+	_, err := db.GetPlayerInfo(playerId)
+	if err != nil {
+		log.Println("Bad PlayerId", playerId)
+		return conf.ERR_SERVER_ERR
+	}
+	sizeNum, _ := strconv.Atoi(gameSize)
+	if matchType == "0" {
+		cache.AddOnePlayerBySize(playerId, sizeNum)
+		return conf.SUCCEED
+	} else if matchType == "1" {
+		cache.EndMatchBySize(playerId, sizeNum)
+		return conf.SUCCEED
+	}
+	return conf.ERR_BAD_PARAM
 }
