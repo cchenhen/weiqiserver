@@ -15,6 +15,7 @@ type WeiqiInfo struct {
 	//index0 	对局双方0黑 1白
 	//index1 	手数 len(steplog[0/1])+1
 	//index2~ 	提子位置，计算方法同上
+	Winner uint32 // 0 未完成 1黑色赢 2白色赢
 }
 
 type PlayerInfo struct {

@@ -85,6 +85,17 @@ func runGameServer() {
 		})
 	})
 
+	r.POST("/Weiqi05", func(c *gin.Context) {
+		playerId := c.PostForm("Uid")
+		gameId := c.PostForm("GameId")
+		typeId := c.PostForm("Type")
+		statusCode := sbin.Weiqi05(playerId, gameId, typeId)
+		log.Println("/Weiqi05_RESP_INFO:", statusCode)
+		c.JSON(200, gin.H{
+			"status": statusCode,
+		})
+	})
+
 	r.POST("/Weiqi06", func(c *gin.Context) {
 		playerId := c.PostForm("Uid")
 		gameId := c.PostForm("GameId")

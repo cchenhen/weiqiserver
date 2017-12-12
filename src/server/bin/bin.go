@@ -196,6 +196,61 @@ func Weiqi04(playerId string, gameId string, nextStep int) *game.RESP_Weiqi_04 {
 	}
 }
 
+func Weiqi05(playerId string, gameId string, typeId string) uint32 {
+	playerInfo, err := db.GetPlayerInfo(playerId)
+	if err != nil {
+		log.Println("Bad PlayerId", playerId)
+		return conf.ERR_SERVER_ERR
+	}
+	key := fmt.Sprintf("Weiqi:Game:%v", gameId)
+	gameInfo, err := db.GetRedisC(key)
+	if err != nil {
+		log.Println("Bad GameId", gameId)
+		return conf.ERR_SERVER_ERR
+	}
+	color, _ := gameInfo.GetWeiqiPlayerColor(playerId)
+	winColor := uint32(0)
+	switch color {
+	case conf.BLACK_PLAYER:
+		winColor = conf.WHITE_PLAYER
+	case conf.WHITE_PLAYER:
+		winColor = conf.BLACK_PLAYER
+	}
+	gameInfo.IsEnd = true
+	gameInfo.Winner = winColor + 1
+	gameIdNum := gameInfo.WeiqiId
+	playerInfo.AllWQ[gameIdNum] = []uint32{color, 2}
+	//set player winner
+	for _, v := range gameInfo.Player {
+		if v != playerId {
+			//is winner player
+			winnerPlayer, err := db.GetPlayerInfo(v)
+			if err != nil {
+				log.Println("Bad PlayerId", v)
+				return conf.ERR_SERVER_ERR
+			}
+			winnerPlayer.AllWQ[gameIdNum] = []uint32{winColor, 1}
+			// SAVE DB
+			err = db.SetPlayerInfo(winnerPlayer.GetDbKey(), winnerPlayer)
+			if err != nil {
+				log.Println(err)
+				return conf.ERR_SERVER_ERR
+			}
+		}
+	}
+	err = db.SetPlayerInfo(playerInfo.GetDbKey(), playerInfo)
+	if err != nil {
+		log.Println(err)
+		return conf.ERR_SERVER_ERR
+	}
+	err = db.SetRedisC(gameInfo.GetDbKey(), gameInfo)
+	if err != nil {
+		log.Println("Set failed", err)
+		return conf.ERR_SERVER_ERR
+	}
+	return conf.SUCCEED
+}
+
 func Weiqi06(playId string, gameId string) *game.RESP_Weiqi_06 {
 	_, err := db.GetPlayerInfo(playId)
 	if err != nil {
